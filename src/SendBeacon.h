@@ -20,5 +20,5 @@ private:
   size_t length;
   int port;
   UDP socket;
-  Timer *timer;
+  Timer timer;
 };

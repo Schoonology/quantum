@@ -4,21 +4,17 @@
 
 #include "ReceiveCommands.h"
 
-ReceiveCommands::ReceiveCommands(int port, void perform (uint8_t)) {
-  this->perform = perform;
-
-  server = new TCPServer(port);
-  timer = new Timer(1000, &ReceiveCommands::receive, *this);
+ReceiveCommands::ReceiveCommands(int port, void perform (uint8_t))
+  : perform(perform)
+  , server(port)
+  , timer(1000, &ReceiveCommands::receive, *this) {
 }
 
-ReceiveCommands::~ReceiveCommands() {
-  delete server;
-}
+ReceiveCommands::~ReceiveCommands() {}
 
 void ReceiveCommands::begin() {
-  server->begin();
-
-  timer->start();
+  server.begin();
+  timer.start();
 }
 
 void ReceiveCommands::receive() {
@@ -27,7 +23,7 @@ void ReceiveCommands::receive() {
   }
 
   if (!client.connected()) {
-    client = server->available();
+    client = server.available();
   }
 }
 

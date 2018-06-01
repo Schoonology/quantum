@@ -18,6 +18,6 @@ private:
 
   TCPClient client;
   void (*perform) (uint8_t);
-  TCPServer *server;
-  Timer *timer;
+  TCPServer server;
+  Timer timer;
 };

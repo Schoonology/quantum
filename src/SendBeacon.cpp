@@ -26,12 +26,10 @@ void getBytesForHexString(String hex, uint8_t *buf, size_t len) {
   }
 }
 
-SendBeacon::SendBeacon(int port) {
-  this->port = port;
-
+SendBeacon::SendBeacon(int port)
+  : port(port)
+  , timer(1000, &SendBeacon::send, *this) {
   compileBeaconData();
-
-  timer = new Timer(1000, &SendBeacon::send, *this);
 }
 
 SendBeacon::~SendBeacon() {
@@ -43,8 +41,7 @@ void SendBeacon::begin() {
   address[3] = 255;
 
   socket.begin(port);
-
-  timer->start();
+  timer.start();
 }
 
 void SendBeacon::compileBeaconData() {
