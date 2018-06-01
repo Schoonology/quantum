@@ -1,33 +1,20 @@
 #pragma once
 
-/* Quantum library by Michael Schoonmaker
+/**
+ * Quantum library by Michael Schoonmaker
  */
 
-// This will load the definition for common Particle variable types
-#include "Particle.h"
+#include "SendBeacon.h"
+#include "ReceiveCommands.h"
 
-// This is your main class that users will import into their application
-class Quantum
-{
+class Quantum {
 public:
-  /**
-   * Constructor
-   */
-  Quantum();
+  Quantum(void perform (uint8_t));
+  ~Quantum();
 
-  /**
-   * Example method
-   */
   void begin();
 
-  /**
-   * Example method
-   */
-  void process();
-
 private:
-  /**
-   * Example private method
-   */
-  void doit();
+  ReceiveCommands *receiver;
+  SendBeacon *beacon;
 };

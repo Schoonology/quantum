@@ -1,39 +1,20 @@
-/* Quantum library by Michael Schoonmaker
+/**
+ * Quantum library by Michael Schoonmaker
  */
 
 #include "Quantum.h"
 
-/**
- * Constructor.
- */
-Quantum::Quantum()
-{
-  // be sure not to call anything that requires hardware be initialized here, put those in begin()
+Quantum::Quantum(void perform (uint8_t)) {
+  beacon = new SendBeacon(7777);
+  receiver = new ReceiveCommands(7778, perform);
 }
 
-/**
- * Example method.
- */
-void Quantum::begin()
-{
-    // initialize hardware
-    Serial.println("called begin");
+Quantum::~Quantum() {
+  delete beacon;
+  delete receiver;
 }
 
-/**
- * Example method.
- */
-void Quantum::process()
-{
-    // do something useful
-    Serial.println("called process");
-    doit();
-}
-
-/**
-* Example private method
-*/
-void Quantum::doit()
-{
-    Serial.println("called doit");
+void Quantum::begin() {
+  beacon->begin();
+  receiver->begin();
 }
