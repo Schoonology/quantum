@@ -7,7 +7,7 @@
 ReceiveCommands::ReceiveCommands(int port, void perform (uint8_t))
   : perform(perform)
   , server(port)
-  , timer(1000, &ReceiveCommands::receive, *this) {
+  , timer(100, &ReceiveCommands::receive, *this) {
 }
 
 ReceiveCommands::~ReceiveCommands() {}
@@ -18,9 +18,7 @@ void ReceiveCommands::begin() {
 }
 
 void ReceiveCommands::receive() {
-  while (client.available()) {
-    pullNextPage();
-  }
+  pullNextPage();
 
   if (!client.connected()) {
     client = server.available();
@@ -34,9 +32,15 @@ void ReceiveCommands::forwardReceived(uint8_t *data, size_t size) {
 }
 
 void ReceiveCommands::pullNextPage() {
-  uint8_t buffer[32];
-  memset(buffer, 0, 32);
-  size_t bytesRead = client.read(buffer, 32);
+  size_t available = client.available();
+
+  if (!available) {
+    return;
+  }
+
+  size_t length = available > 32 ? 32 : available;
+  uint8_t *buffer = new uint8_t[length];
+  size_t bytesRead = client.read(buffer, length);
 
   forwardReceived(buffer, bytesRead);
 }
