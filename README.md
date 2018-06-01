@@ -17,6 +17,23 @@ Each byte received over the network will be sent to this function. See Limitatio
 - `new Quantum(perform)` — Creates a new `Quantum` instance with the provided `perform` function (which can have _any_ name, but signature described above).
 - `begin` — Modeled after the built-in networking APIs, a `Quantum` instance is silent until `begin` is called. This starts the internal timers that broadcast beacons and receive bytes over the network.
 
+## Configuration
+
+If you need more control over the internal settings, the Quantum constructor can also be provided an options struct (see `examples/configuration` for a worked example):
+
+```
+Quantum myInstance(perform, {
+  ...
+})
+```
+
+The following options are available:
+
+- `beaconPort` — the port Quantum uses to transmit UDP beacons.
+- `commandPort` — the port Quantum uses to receive TCP commands.
+- `beaconInterval` — the delay in milliseconds between UDP beacons.
+- `commandInterval` — the delay in milliseconds between checking for TCP clients and commands.
+
 ## Technical details
 
 - **Discoverability** — Quantum uses UDP multicast to broadcast device state to other listening peers. At the moment, the only state broadcast is the device's ID.

@@ -6,7 +6,7 @@
 
 class ReceiveCommands {
 public:
-  ReceiveCommands(int port, void perform (uint8_t));
+  ReceiveCommands(int port, void perform (uint8_t), int interval);
   ~ReceiveCommands();
 
   void begin();

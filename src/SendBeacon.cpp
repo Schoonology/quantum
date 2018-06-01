@@ -26,9 +26,9 @@ void getBytesForHexString(String hex, uint8_t *buf, size_t len) {
   }
 }
 
-SendBeacon::SendBeacon(int port)
+SendBeacon::SendBeacon(int port, int interval)
   : port(port)
-  , timer(1000, &SendBeacon::send, *this) {
+  , timer(interval, &SendBeacon::send, *this) {
   compileBeaconData();
 }
 

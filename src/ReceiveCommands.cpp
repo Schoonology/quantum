@@ -4,10 +4,10 @@
 
 #include "ReceiveCommands.h"
 
-ReceiveCommands::ReceiveCommands(int port, void perform (uint8_t))
+ReceiveCommands::ReceiveCommands(int port, void perform (uint8_t), int interval)
   : perform(perform)
   , server(port)
-  , timer(100, &ReceiveCommands::receive, *this) {
+  , timer(interval, &ReceiveCommands::receive, *this) {
 }
 
 ReceiveCommands::~ReceiveCommands() {}

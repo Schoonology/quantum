@@ -6,7 +6,7 @@
 
 class SendBeacon {
 public:
-  SendBeacon(int port);
+  SendBeacon(int port, int interval);
   ~SendBeacon();
 
   void begin();
