@@ -23,6 +23,6 @@ public:
   void begin();
 
 private:
-  ReceiveCommands *receiver;
-  SendBeacon *beacon;
+  SendBeacon beacon;
+  ReceiveCommands receiver;
 };
