@@ -18,29 +18,20 @@ void ReceiveCommands::begin() {
 }
 
 void ReceiveCommands::receive() {
-  pullNextPage();
+  forwardAvailableBytes();
 
   if (!client.connected()) {
     client = server.available();
   }
 }
 
-void ReceiveCommands::forwardReceived(uint8_t *data, size_t size) {
-  for (size_t idx = 0; idx < size; ++idx) {
-    perform(data[idx]);
-  }
-}
+void ReceiveCommands::forwardAvailableBytes() {
+  int byte = client.read();
 
-void ReceiveCommands::pullNextPage() {
-  size_t available = client.available();
-
-  if (!available) {
+  if (byte == -1) {
     return;
   }
 
-  size_t length = available > 32 ? 32 : available;
-  uint8_t *buffer = new uint8_t[length];
-  size_t bytesRead = client.read(buffer, length);
-
-  forwardReceived(buffer, bytesRead);
+  perform(byte & 0xff);
+  forwardAvailableBytes();
 }

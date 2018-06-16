@@ -13,8 +13,7 @@ public:
   void receive();
 
 private:
-  void forwardReceived(uint8_t *data, size_t size);
-  void pullNextPage();
+  void forwardAvailableBytes();
 
   TCPClient client;
   void (*perform) (uint8_t);
