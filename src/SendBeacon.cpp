@@ -57,4 +57,11 @@ void SendBeacon::send() {
   socket.beginPacket(address, port);
   socket.write(data, length);
   socket.endPacket();
+
+  // Flush any received data to empty buffers.
+  // TODO(schoon) - Implement receiving beacons?
+  while (UDP.parsePacket()) {
+    uint8_t received = new uint8_t[128];
+    socket.read(received, 128);
+  }
 }
